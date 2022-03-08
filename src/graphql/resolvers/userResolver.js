@@ -13,7 +13,7 @@ module.exports = {
         throw error;
       }
     },
-    login: async (_parent, args, { res }, _context, _info) => {
+    login: async (_, args, { res }) => {
       console.log("entered login");
       // Validation
       const authSchema = validateUser.fork(["name", "userType"], (schema) =>
