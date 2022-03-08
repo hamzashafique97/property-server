@@ -13,16 +13,15 @@ module.exports = {
         throw error;
       }
     },
-    login: async (args, { res }) => {
+    login: async (_parent, args, { res }, _context, _info) => {
       console.log("entered login");
       // Validation
-      const authSchema = validateUser.fork(
-        ["name", "userType"],
-        (schema) => schema.optional()
+      const authSchema = validateUser.fork(["name", "userType"], (schema) =>
+        schema.optional()
       );
       const { error } = authSchema.validate(args.input);
       if (error) return next(error);
-  
+
       if (error) {
         throw new Error(error.message);
       }
@@ -39,7 +38,7 @@ module.exports = {
           userId: user._id,
           userType: user.userType,
         });
-        console.log(access_token, "access_token");
+        console.log(access_token)
         res.cookie("jwt", access_token, { httpOnly: true });
         return { ...user._doc };
       } catch (error) {
@@ -50,7 +49,6 @@ module.exports = {
   Mutation: {
     createUser: async (parent, args, context, info) => {
       console.log("entered createUser");
-      console.log(args.input);
 
       const { error } = validateUser.validate(args.input);
       if (error) {
@@ -77,7 +75,7 @@ module.exports = {
     updateUser: async (args) => {
       try {
         args.input.password = await bcrypt.hash(args.input.password, 10);
-  
+
         const result = await User.findOneAndUpdate(
           { _id: args.id },
           { ...args.input },

@@ -5,12 +5,14 @@ const { ApolloServer } = require("apollo-server-express");
 const schema = require("./src/graphql/schema/index");
 const resolvers = require("./src/graphql/resolvers/index");
 const cors = require("cors");
+const cookieParser = require('cookie-parser')
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(cookieParser())
 
 const serverStart = async () => {
   const server = new ApolloServer({
