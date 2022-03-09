@@ -72,7 +72,7 @@ module.exports = {
         throw error;
       }
     },
-    updateUser: async (args) => {
+    updateUser: async (parent, args, context, info) => {
       try {
         args.input.password = await bcrypt.hash(args.input.password, 10);
 

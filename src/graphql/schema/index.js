@@ -23,7 +23,7 @@ const schema = gql`
 
   type Mutation {
     createUser(input: UserInput): User
-    updateUser(id: String!, input: UserInput): User
+    updateUser(id: ID!, input: UserInput): User
   }
 `;
 
